@@ -1,286 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wood West Home Group</title>
-  <style>
-    * { box-sizing: border-box; font-family: Arial, sans-serif; }
-    body { margin: 0; background: #f7f7f7; }
-
-    .page-title { text-align: center; font-size: 32px; font-weight: bold; padding: 24px 10px 10px; color: #0b3a5f; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-
-    .container { max-width: 1200px; margin: 30px auto 40px; display: grid; grid-template-columns: 1fr 2fr; gap: 40px; padding: 0 20px; }
-
-    .profile-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
-
-    .profile-img { width: 100%; height: 300px; object-fit: cover; }
-
-    .profile-info { padding: 20px; text-align: center; }
-
-    .btn-group { display: flex; gap: 12px; justify-content: center; margin-top: 15px; }
-
-    .btn { padding: 10px 18px; border-radius: 25px; border: 2px solid #0b3a5f; background: white; color: #0b3a5f; cursor: pointer; font-weight: bold; }
-    .btn.primary { background: #0b3a5f; color: white; }
-
-    .listings { background: #fff; border-radius: 12px; padding: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
-
-    .tabs { display: flex; gap: 20px; border-bottom: 2px solid #eee; margin-bottom: 15px; align-items: center; }
-
-    .tab { padding-bottom: 10px; cursor: pointer; font-weight: bold; }
-
-    .tab.active { border-bottom: 3px solid #0b3a5f; color: #0b3a5f; }
-
-    .edit-bar { margin-left: auto; display: flex; gap: 10px; }
-
-    .edit-toggle { padding: 6px 12px; border-radius: 20px; border: 1px solid #0b3a5f; background: #0b3a5f; color: white; cursor: pointer; font-size: 13px; }
-
-    .add-btn { padding: 6px 12px; border-radius: 20px; border: 1px solid #0b3a5f; background: white; color: #0b3a5f; cursor: pointer; font-size: 13px; display: none; }
-
-    .listing-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-
-    .listing-card { border-radius: 10px; overflow: hidden; border: 1px solid #ddd; position: relative; text-decoration: none; color: inherit; background: white; cursor: pointer; }
-
-    .listing-card img { width: 100%; height: 160px; object-fit: cover; }
-
-    .listing-details { padding: 12px; }
-
-    .status-box { font-size: 13px; font-weight: bold; background: #0b3a5f; color: white; display: inline-block; padding: 4px 8px; border-radius: 6px; margin-bottom: 6px; }
-
-    .price { font-size: 20px; font-weight: bold; }
-    .meta { color: #555; font-size: 14px; margin-top: 5px; }
-    .address { margin-top: 10px; color: #0b3a5f; font-size: 14px; }
-    .delete-btn { position: absolute; top: 8px; right: 8px; background: crimson; color: white; border: none; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; display: none; font-weight: bold; line-height: 26px; text-align: center; z-index: 10; }
-
-    .editable { outline: 2px dashed #0b3a5f; padding: 2px; border-radius: 4px; }
-
-    #listingModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
-    #listingModal > div { background: white; border-radius: 12px; max-width: 900px; width: 92%; max-height: 92%; overflow-y: auto; padding: 20px; position: relative; }
-
-    #dropZone { position: relative; border: 2px dashed #ccc; border-radius: 12px; padding: 10px; margin-bottom: 10px; }
-    #dropZone.dragover { border-color: #0b3a5f; background: #f0f7fc; }
-    #listingModal img { width: 100%; height: 420px; object-fit: cover; border-radius: 12px; margin-bottom: 6px; display: block; }
-    .close-modal { position: absolute; top: 10px; right: 15px; font-size: 26px; cursor: pointer; font-weight: bold; }
-    .modal-editable.editing { outline: 2px dashed #0b3a5f; padding: 4px; border-radius: 6px; }
-    .carousel-btn { position: absolute; top: 45%; background: white; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.3); z-index: 5; }
-    .carousel-btn.prev { left: 10px; }
-    .carousel-btn.next { right: 10px; }
-
-    #dropHint { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; font-weight: bold; color: #0b3a5f; background: rgba(255,255,255,0.85); border-radius: 12px; pointer-events: none; }
-
-    @media (max-width: 768px) { .container { grid-template-columns: 1fr; gap: 20px; } }
-  </style>
+    <meta charset="UTF-8">
+    <title>Wood West Home Group</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        .listing {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-  <div class="page-title">Wood West Home Group</div>
-  <div class="container">
-    <!-- LEFT PROFILE -->
-    <div class="profile-card">
-      <img class="profile-img" src="//img1.wsimg.com/isteam/ip/bf5f1556-8f51-4379-a973-aa4d175924e0/Alpha1Studio%202022Feb09%204320%20Linciya%20(STD)%20(1).jpg/:/cr=t:6.19%25,l:0%25,w:100%25,h:71.46%25/rs=w:365,h:365,cg:true" alt="Agent" />
-      <div class="profile-info">
-        <h1>Linciya Li</h1>
-        <div class="btn-group">
-          <button class="btn primary">Work With Me</button>
-          <button class="btn">Message Me</button>
-        </div>
-      </div>
-    </div>
 
-    <!-- RIGHT LISTINGS -->
-    <div class="listings">
-      <div class="tabs">
-        <div class="tab active" onclick="showListings('active')">Active Listings</div>
-        <div class="tab" onclick="showListings('sold')">Sold Listings</div>
-        <div class="edit-bar">
-          <button class="edit-toggle" onclick="toggleEdit()">✏️ Edit Mode</button>
-          <button class="add-btn" onclick="addListing()">➕ Add Listing</button>
-        </div>
-      </div>
+<h1>Wood West Home Group</h1>
+<h2>Linciya Li</h2>
 
-      <div id="activeListings" class="listing-grid">
-        <div class="listing-card">
-          <button class="delete-btn" onclick="deleteListing(event)">×</button>
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" />
-          <div class="listing-details">
-            <div class="status-box">For Sale</div>
-            <div class="price">$975,000</div>
-            <div class="meta">3 BR | 3 BA | 1930 SQFT</div>
-            <div class="address">1713 NW 60th Street B, Seattle, WA</div>
-          </div>
-        </div>
-      </div>
+<h3>Active Listings</h3>
 
-      <div id="soldListings" class="listing-grid" style="display:none;">
-        <div class="listing-card">
-          <button class="delete-btn" onclick="deleteListing(event)">×</button>
-          <img src="https://images.unsplash.com/photo-1572120360610-d971b9b6399c" />
-          <div class="listing-details">
-            <div class="status-box">Sold</div>
-            <div class="price">$935,000</div>
-            <div class="meta">4 BR | 3 BA | 2214 SQFT</div>
-            <div class="address">4408 221st Place SW, Mountlake Terrace, WA</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="listing">
+    <strong>For Sale</strong> · $975,000  
+    <br>3 BR | 3 BA | 1930 SQFT  
+    <br>1713 NW 60th Street B, Seattle, WA
+</div>
 
-  <!-- MODAL -->
-  <div id="listingModal">
-    <div>
-      <span class="close-modal" onclick="closeModal()">&times;</span>
-      <div id="dropZone">
-        <button class="carousel-btn prev" onclick="prevImage()">◀</button>
-        <img id="modalImage" src="" />
-        <button class="carousel-btn next" onclick="nextImage()">▶</button>
-        <div id="dropHint">Drop images here</div>
-      </div>
-      <p id="modalStatus" class="modal-editable"></p>
-      <h2 id="modalPrice" class="modal-editable">$0</h2>
-      <p id="modalMeta" class="modal-editable"></p>
-      <p id="modalAddress" class="modal-editable" style="color:#0b3a5f; font-weight:bold;"></p>
-      <button id="modalSaveBtn" class="btn primary" style="display:none; margin-top:10px;" onclick="saveModalChanges()">💾 Save</button>
-    </div>
-  </div>
+<h3>Sold Listings</h3>
 
-  <script>
-    let editMode = false;
-    let currentTab = 'active';
-    const EDIT_PASSWORD = "linciyali";
+<div class="listing">
+    <strong>Sold</strong> · $935,000  
+    <br>4 BR | 3 BA | 2214 SQFT  
+    <br>4408 221st Place SW, Mountlake Terrace, WA
+</div>
 
-    let modalImages = [];
-    let currentImageIndex = 0;
-    let activeCard = null;
-
-    const activeListings = document.getElementById('activeListings');
-    const soldListings = document.getElementById('soldListings');
-    const listingModal = document.getElementById('listingModal');
-    const modalImage = document.getElementById('modalImage');
-    const modalPrice = document.getElementById('modalPrice');
-    const modalMeta = document.getElementById('modalMeta');
-    const modalAddress = document.getElementById('modalAddress');
-    const modalStatus = document.getElementById('modalStatus');
-    const dropZone = document.getElementById('dropZone');
-    const dropHint = document.getElementById('dropHint');
-    const modalSaveBtn = document.getElementById('modalSaveBtn');
-
-    function showListings(type) {
-      currentTab = type;
-      document.querySelectorAll('.tab')[0].classList.toggle('active', type === 'active');
-      document.querySelectorAll('.tab')[1].classList.toggle('active', type === 'sold');
-      activeListings.style.display = type === 'active' ? 'grid' : 'none';
-      soldListings.style.display = type === 'sold' ? 'grid' : 'none';
-    }
-
-    function toggleEdit() {
-      if (!editMode) {
-        const pass = prompt("Enter edit password:");
-        if (pass !== EDIT_PASSWORD) { alert("❌ Incorrect password"); return; }
-      }
-      editMode = !editMode;
-      document.querySelector('.add-btn').style.display = editMode ? 'inline-block' : 'none';
-      document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = editMode ? 'block' : 'none');
-      document.querySelectorAll('.price,.meta,.address,.status-box').forEach(el => {
-        el.contentEditable = editMode;
-        el.classList.toggle('editable', editMode);
-      });
-    }
-
-    function addListing() {
-      if (!editMode) return;
-      const grid = currentTab === 'active' ? activeListings : soldListings;
-      const card = document.createElement('div');
-      card.className = "listing-card";
-      card.innerHTML = `
-        <button class="delete-btn" onclick="deleteListing(event)">×</button>
-        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994" />
-        <div class="listing-details">
-          <div class="status-box">For Sale</div>
-          <div class="price">$0</div>
-          <div class="meta">Beds | Baths | SQFT</div>
-          <div class="address">New Address</div>
-        </div>`;
-      grid.appendChild(card);
-      attachCardHandler(card);
-      card.querySelectorAll('.price,.meta,.address,.status-box').forEach(el => {
-        el.contentEditable = true;
-        el.classList.add('editable');
-      });
-      card.querySelector('.delete-btn').style.display = 'block';
-    }
-
-    function deleteListing(e) { e.preventDefault(); e.stopPropagation(); e.target.closest('.listing-card').remove(); }
-
-    function attachCardHandler(card) {
-      card.addEventListener('click', e => { if (e.target.classList.contains('delete-btn')) return; openListingModal(card); });
-    }
-    document.querySelectorAll('.listing-card').forEach(attachCardHandler);
-
-    function openListingModal(card) {
-      activeCard = card;
-
-      // Load images
-      if (card.dataset.images) {
-        modalImages = JSON.parse(card.dataset.images);
-      } else {
-        modalImages = [card.querySelector('img').src];
-      }
-      currentImageIndex = 0;
-      modalImage.src = modalImages[0];
-
-      modalPrice.innerText = card.querySelector('.price').innerText;
-      modalMeta.innerText = card.querySelector('.meta').innerText;
-      modalAddress.innerText = card.querySelector('.address').innerText;
-      modalStatus.innerText = card.querySelector('.status-box').innerText;
-
-      document.querySelectorAll('.modal-editable').forEach(el => {
-        el.contentEditable = editMode;
-        el.classList.toggle('editing', editMode);
-      });
-
-      modalSaveBtn.style.display = editMode ? 'inline-block' : 'none';
-      listingModal.style.display = 'flex';
-    }
-
-    function closeModal() { listingModal.style.display = 'none'; }
-
-    function saveModalChanges() {
-      if (!activeCard) return;
-
-      // Save text fields
-      activeCard.querySelector('.price').innerText = modalPrice.innerText;
-      activeCard.querySelector('.meta').innerText = modalMeta.innerText;
-      activeCard.querySelector('.address').innerText = modalAddress.innerText;
-      activeCard.querySelector('.status-box').innerText = modalStatus.innerText;
-
-      // Save all images to card
-      activeCard.dataset.images = JSON.stringify(modalImages);
-      activeCard.querySelector('img').src = modalImages[0];
-
-      alert("✅ Listing updated!");
-      closeModal();
-    }
-
-    function nextImage() { if (!modalImages.length) return; currentImageIndex = (currentImageIndex + 1) % modalImages.length; modalImage.src = modalImages[currentImageIndex]; }
-    function prevImage() { if (!modalImages.length) return; currentImageIndex = (currentImageIndex - 1 + modalImages.length) % modalImages.length; modalImage.src = modalImages[currentImageIndex]; }
-
-    dropZone.addEventListener('dragover', e => { if (!editMode) return; e.preventDefault(); dropZone.classList.add('dragover'); dropHint.style.display = 'flex'; });
-    dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('dragover'); dropHint.style.display = 'none'; });
-    dropZone.addEventListener('drop', e => {
-      if (!editMode) return; e.preventDefault(); dropZone.classList.remove('dragover'); dropHint.style.display = 'none';
-      const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = ev => { modalImages.push(ev.target.result); currentImageIndex = modalImages.length-1; modalImage.src = ev.target.result; };
-        reader.readAsDataURL(file);
-      });
-    });
-
-    listingModal.addEventListener('click', e => { if (e.target === listingModal) closeModal(); });
-  </script>
 </body>
-
 </html>
-
-
-
