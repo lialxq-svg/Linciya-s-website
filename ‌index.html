@@ -1,48 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-    
+
 <head>
-    <meta charset="UTF-8">
-    <title>Wood West Home Group</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        h1 {
-            margin-bottom: 10px;
-        }
-        .listing {
-            margin: 20px 0;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="linciya.css">
+  <title>Linciya</title>
+
 </head>
+
 <body>
+  <div class="page-title">Wood West Home Group</div>
+  <div class="container">
+    <!-- LEFT PROFILE -->
+    <div class="profile-card">
+      <img class="profile-img"
+        src="//img1.wsimg.com/isteam/ip/bf5f1556-8f51-4379-a973-aa4d175924e0/Alpha1Studio%202022Feb09%204320%20Linciya%20(STD)%20(1).jpg/:/cr=t:6.19%25,l:0%25,w:100%25,h:71.46%25/rs=w:365,h:365,cg:true"
+        alt="Agent" />
+      <div class="profile-info">
+        <h1>Linciya Li</h1>
+        <div class="btn-group">
+          <button class="btn primary">Work With Me</button>
+          <button class="btn">Message Me</button>
+        </div>
+      </div>
+    </div>
 
-<h1>Wood West Home Group</h1>
-<h2>Linciya Li</h2>
+    <!-- RIGHT LISTINGS -->
+    <div class="listings">
+      <div class="tabs">
+        <div class="tab active" onclick="showListings('active')">Active Listings</div>
+        <div class="tab" onclick="showListings('sold')">Sold Listings</div>
+        <div class="edit-bar">
+          <button class="edit-toggle" onclick="toggleEdit()">✏️ Edit Mode</button>
+          <button class="add-btn" onclick="addListing()">➕ Add Listing</button>
+        </div>
+      </div>
 
-<h3>Active Listings</h3>
+      <div id="activeListings" class="listing-grid">
+        <div class="listing-card">
+          <button class="delete-btn" onclick="deleteListing(event)">×</button>
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" />
+          <div class="listing-details">
+            <div class="status-box">For Sale</div>
+            <div class="price">$975,000</div>
+            <div class="meta">3 BR | 3 BA | 1930 SQFT</div>
+            <div class="address">1713 NW 60th Street B, Seattle, WA</div>
+          </div>
+        </div>
+      </div>
 
-<div class="listing">
-    <strong>For Sale</strong> · $975,000  
-    <br>3 BR | 3 BA | 1930 SQFT  
-    <br>1713 NW 60th Street B, Seattle, WA
-</div>
+      <div id="soldListings" class="listing-grid" style="display:none;">
+        <div class="listing-card">
+          <button class="delete-btn" onclick="deleteListing(event)">×</button>
+          <img src="https://images.unsplash.com/photo-1572120360610-d971b9b6399c" />
+          <div class="listing-details">
+            <div class="status-box">Sold</div>
+            <div class="price">$935,000</div>
+            <div class="meta">4 BR | 3 BA | 2214 SQFT</div>
+            <div class="address">4408 221st Place SW, Mountlake Terrace, WA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<h3>Sold Listings</h3>
-
-<div class="listing">
-    <strong>Sold</strong> · $935,000  
-    <br>4 BR | 3 BA | 2214 SQFT  
-    <br>4408 221st Place SW, Mountlake Terrace, WA
-</div>
-
+  <!-- MODAL -->
+  <div id="listingModal">
+    <div>
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <div id="dropZone">
+        <button class="carousel-btn prev" onclick="prevImage()">◀</button>
+        <img id="modalImage" src="" />
+        <button class="carousel-btn next" onclick="nextImage()">▶</button>
+        <div id="dropHint">Drop images here</div>
+      </div>
+      <p id="modalStatus" class="modal-editable"></p>
+      <h2 id="modalPrice" class="modal-editable">$0</h2>
+      <p id="modalMeta" class="modal-editable"></p>
+      <p id="modalAddress" class="modal-editable" style="color:#0b3a5f; font-weight:bold;"></p>
+      <button id="modalSaveBtn" class="btn primary" style="display:none; margin-top:10px;"
+        onclick="saveModalChanges()">💾 Save</button>
+      <button id="modalDeleteImgBtn" class="btn"
+        style="display:none; margin-top:10px; border-color:crimson; color:crimson;"
+        onclick="deleteCurrentModalImage()">🗑 Delete Image</button>
+    </div>
+  </div>
+  <script src="linciya.js"></script>
 </body>
+
 </html>
 
